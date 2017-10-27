@@ -1,0 +1,14 @@
+## File-based project format:
+*.iws
+
+# IntelliJ
+out/
+
+# Maven
+log/
+target/
+
+# Intellij
+.idea/
+*.iml
+*.iws
