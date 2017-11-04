@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 
-@Path("/syno")
+@Path("/classifier")
 public class ClassifierService {
     private static final Logger log = Logger.getLogger(ClassifierService.class.getName());
 

@@ -8,23 +8,17 @@ import opennlp.tools.doccat.DocumentCategorizerME;
 import opennlp.tools.doccat.DocumentSample;
 import opennlp.tools.doccat.DocumentSampleStream;
 import opennlp.tools.tokenize.SimpleTokenizer;
-import opennlp.tools.util.MarkableFileInputStreamFactory;
-import opennlp.tools.util.ObjectStream;
-import opennlp.tools.util.PlainTextByLineStream;
-import opennlp.tools.util.TrainingParameters;
+import opennlp.tools.util.*;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.HashMap;
 
 
 public class OpenNLPDocumentCategorizer {
-    public void trainModel(String inputFile, String modelFile) throws IOException {
+    public void trainModel(ObjectStream<String> lineStream, String modelFile) throws IOException {
         DoccatModel model = null;
         try {
-
-            MarkableFileInputStreamFactory factory = new MarkableFileInputStreamFactory(new File(inputFile));
-            ObjectStream<String> lineStream = new PlainTextByLineStream(factory, "UTF-8");
-
             ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
 
             TrainingParameters mlParams = new TrainingParameters();
@@ -39,8 +33,23 @@ public class OpenNLPDocumentCategorizer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+
+    public void trainModelfromMarkedFile(String inputFile, String modelFile) throws IOException {
+
+        MarkableFileInputStreamFactory factory = new MarkableFileInputStreamFactory(new File(inputFile));
+        ObjectStream<String> lineStream = new PlainTextByLineStream(factory, "UTF-8");
+        this.trainModel(lineStream, modelFile);
+    }
+
+    public void trainModelfromDocuments(String contentDir, String modelFile) throws IOException {
+
+        InputStream trainingData = ClassifierDataUtil.readClassifierSourceData(contentDir);
+        InputStreamFactory inputStreamFactory = new DocumentFileInputStreamFactory(trainingData);
+        ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, "UTF-8");
+        this.trainModel(lineStream, modelFile);
+    }
+
 
     private InputStream inputStream;
     private DoccatModel docCatModel;
@@ -63,5 +72,16 @@ public class OpenNLPDocumentCategorizer {
         double[] outcomes = myCategorizer.categorize(tokens);
         String category = myCategorizer.getBestCategory(outcomes);
         return category;
+    }
+
+    public HashMap<String,Double> getWeights(String text) {
+        HashMap<String,Double> results = new HashMap<String,Double>();
+        SimpleTokenizer tokenizer = SimpleTokenizer.INSTANCE;
+        String[] tokens = tokenizer.tokenize(text);
+        double[] outcomes = myCategorizer.categorize(tokens);
+        for(int i = 0; i < outcomes.length; i++){
+            results.put(myCategorizer.getCategory(i), outcomes[i]);
+        }
+        return results;
     }
 }
