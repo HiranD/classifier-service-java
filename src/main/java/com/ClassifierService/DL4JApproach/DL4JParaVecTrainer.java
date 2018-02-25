@@ -1,4 +1,4 @@
-package DL4JApproach;
+package com.ClassifierService.DL4JApproach;
 
 import org.deeplearning4j.models.paragraphvectors.ParagraphVectors;
 import org.deeplearning4j.text.documentiterator.LabelAwareIterator;

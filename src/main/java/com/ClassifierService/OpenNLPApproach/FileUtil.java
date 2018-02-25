@@ -1,4 +1,4 @@
-package OpenNLPApproach;
+package com.ClassifierService.OpenNLPApproach;
 
 import java.io.BufferedReader;
 import java.io.File;

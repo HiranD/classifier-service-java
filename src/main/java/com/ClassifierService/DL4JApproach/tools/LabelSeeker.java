@@ -1,4 +1,4 @@
-package DL4JApproach.tools;
+package com.ClassifierService.DL4JApproach.tools;
 
 import org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable;
 import org.deeplearning4j.models.word2vec.VocabWord;

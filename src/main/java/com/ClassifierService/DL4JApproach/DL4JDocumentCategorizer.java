@@ -1,8 +1,8 @@
-package DL4JApproach;
+package com.ClassifierService.DL4JApproach;
 
+import com.ClassifierService.DL4JApproach.tools.MeansBuilder;
 import org.nd4j.linalg.primitives.Pair;
-import DL4JApproach.tools.LabelSeeker;
-import DL4JApproach.tools.MeansBuilder;
+import com.ClassifierService.DL4JApproach.tools.LabelSeeker;
 import org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable;
 import org.deeplearning4j.models.paragraphvectors.ParagraphVectors;
 import org.deeplearning4j.models.word2vec.VocabWord;
