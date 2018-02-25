@@ -1,13 +1,10 @@
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import OpenNLPApproach.FileUtil;
-import OpenNLPApproach.OpenNLPDocumentCategorizer;
+import com.ClassifierService.OpenNLPApproach.FileUtil;
+import com.ClassifierService.OpenNLPApproach.OpenNLPDocumentCategorizer;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

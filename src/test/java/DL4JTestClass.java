@@ -1,5 +1,4 @@
-import DL4JApproach.DL4JDocumentCategorizer;
-import DL4JApproach.DL4JParaVecTrainer;
+import com.ClassifierService.DL4JApproach.DL4JDocumentCategorizer;
 import org.apache.log4j.PropertyConfigurator;
 import org.deeplearning4j.text.documentiterator.FileLabelAwareIterator;
 import org.deeplearning4j.text.documentiterator.LabelAwareIterator;
