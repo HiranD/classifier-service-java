@@ -35,8 +35,8 @@ public class OpenNLPTestClass {
 //            System.out.println(detector.getCategory(line) + "\t" + line);
 //        }
 
-//        String directory = new File("src/test/resources/paravec/labeled").getAbsolutePath();
-//        detector.trainModelfromDocuments( directory, modelFile);
+        String directory = new File("src/test/resources/paravec/labeled").getAbsolutePath();
+        detector.trainModelfromDocuments( directory, modelFile);
 
         detector.initModel(modelFile);
 

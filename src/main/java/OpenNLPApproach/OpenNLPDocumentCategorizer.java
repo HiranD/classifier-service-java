@@ -9,6 +9,8 @@ import opennlp.tools.doccat.DocumentSample;
 import opennlp.tools.doccat.DocumentSampleStream;
 import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -16,6 +18,7 @@ import java.util.HashMap;
 
 
 public class OpenNLPDocumentCategorizer {
+    private static Logger log = LoggerFactory.getLogger(OpenNLPDocumentCategorizer.class);
     public void trainModel(ObjectStream<String> lineStream, String modelFile) throws IOException {
         DoccatModel model = null;
         try {

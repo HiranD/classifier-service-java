@@ -24,7 +24,6 @@ public class ClassifierDataUtil {
 
 		// count lowest content length
 		for (String discipline : fileNames) {
-			log.debug("Reading classifier source data for the discipline: " + discipline + "...");
 			Collection<String> soureLines = FileUtil.readFilesAsList(trainingDataDir + "/" + discipline);
 			long contentLength = 0;
 
@@ -40,7 +39,7 @@ public class ClassifierDataUtil {
 		log.info("###      Max Content Size: " + lowestContentLength + "      ###");
 
 		for (String discipline : fileNames) {
-			log.debug("Reading classifier source data for the discipline: " + discipline + "...");
+			log.info("Reading classifier source data for the discipline: " + discipline);
 			Collection<String> soureLines = FileUtil.readFilesAsList(trainingDataDir + "/" + discipline);
 			long contentLength = 0;
 			Map<String, Integer> conceptCountMap = new HashMap<String, Integer>();
