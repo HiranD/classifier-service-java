@@ -28,11 +28,13 @@ public class DL4JTestClass {
 
         String modelFile = new File("src/main/resources/models/dl4j_para_vec.pv").getAbsolutePath();
 
+        File resource = new File("src/test/resources/data/labeled");
+        LabelAwareIterator iterator = new FileLabelAwareIterator.Builder().addSourceFolder(resource).build();
         TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
         tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
 
-//        DL4JParaVecTrainer trainer = new DL4JParaVecTrainer(iterator, tokenizerFactory);
-//        trainer.makeParagraphVectors(modelFile);
+        DL4JParaVecTrainer trainer = new DL4JParaVecTrainer(iterator, tokenizerFactory);
+        trainer.makeParagraphVectors(modelFile);
 
         DL4JDocumentCategorizer categorizer = new DL4JDocumentCategorizer(readParagraphVectors(modelFile), tokenizerFactory);
 
