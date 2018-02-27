@@ -14,7 +14,7 @@
     </servlet>
 
     <listener>
-        <listener-class>com.ClassifierService.ServletContextClass</listener-class>
+        <listener-class>ServletContextClass</listener-class>
     </listener>
 
     <servlet-mapping>

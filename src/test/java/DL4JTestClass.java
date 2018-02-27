@@ -36,7 +36,7 @@ public class DL4JTestClass {
 
         DL4JDocumentCategorizer categorizer = new DL4JDocumentCategorizer(readParagraphVectors(modelFile), tokenizerFactory);
 
-//        File unClassifiedResource = new File("src/test/resources/paravec/unlabeled");
+//        File unClassifiedResource = new File("src/test/resources/data/unlabeled");
 //        categorizer.checkUnlabeledData(unClassifiedResource);
 
 

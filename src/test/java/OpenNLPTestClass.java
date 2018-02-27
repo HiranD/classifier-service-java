@@ -32,12 +32,12 @@ public class OpenNLPTestClass {
 //            System.out.println(detector.getCategory(line) + "\t" + line);
 //        }
 
-        String directory = new File("src/main/resources/paravec/labeled").getAbsolutePath();
+        String directory = new File("src/main/resources/data/labeled").getAbsolutePath();
         detector.trainModelfromDocuments( directory, modelFile);
 
         detector.initModel(modelFile);
 
-        String testDataDir = new File("src/main/resources/paravec/unlabeled").getAbsolutePath();
+        String testDataDir = new File("src/main/resources/data/unlabeled").getAbsolutePath();
         Collection<String> fileNames = FileUtil.getDirectories(testDataDir);
         HashMap<String, String> testDataMap = new HashMap<String, String>();
         for (String discipline : fileNames) {
