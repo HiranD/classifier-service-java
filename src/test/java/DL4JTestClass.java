@@ -1,15 +1,19 @@
 import com.ClassifierService.DL4JApproach.DL4JDocumentCategorizer;
+import com.ClassifierService.DL4JApproach.DL4JParaVecTrainer;
+import com.google.gson.Gson;
 import org.apache.log4j.PropertyConfigurator;
 import org.deeplearning4j.text.documentiterator.FileLabelAwareIterator;
 import org.deeplearning4j.text.documentiterator.LabelAwareIterator;
 import org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreprocessor;
 import org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory;
 import org.deeplearning4j.text.tokenization.tokenizerfactory.TokenizerFactory;
+import org.nd4j.linalg.primitives.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.deeplearning4j.models.embeddings.loader.WordVectorSerializer.readParagraphVectors;
 
@@ -19,20 +23,18 @@ public class DL4JTestClass {
 
     public static void main(String[] args) {
     try {
-        String log4jConfPath = new File("src/test/resources/log4j.properties").getAbsolutePath();
+        String log4jConfPath = new File("src/main/resources/log4j.properties").getAbsolutePath();
         PropertyConfigurator.configure(log4jConfPath);
 
-        String modelFile = new File("src/test/resources/models/dl4j_para_vec.pv").getAbsolutePath();
+        String modelFile = new File("src/main/resources/models/dl4j_para_vec.pv").getAbsolutePath();
 
-        File resource = new File("src/test/resources/paravec/labeled");
-        LabelAwareIterator iterator = new FileLabelAwareIterator.Builder().addSourceFolder(resource).build();
         TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
         tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
 
 //        DL4JParaVecTrainer trainer = new DL4JParaVecTrainer(iterator, tokenizerFactory);
 //        trainer.makeParagraphVectors(modelFile);
 
-        DL4JDocumentCategorizer categorizer = new DL4JDocumentCategorizer(readParagraphVectors(modelFile), iterator, tokenizerFactory);
+        DL4JDocumentCategorizer categorizer = new DL4JDocumentCategorizer(readParagraphVectors(modelFile), tokenizerFactory);
 
 //        File unClassifiedResource = new File("src/test/resources/paravec/unlabeled");
 //        categorizer.checkUnlabeledData(unClassifiedResource);
@@ -60,8 +62,15 @@ public class DL4JTestClass {
                 "While antiretroviral treatment reduces the risk of death and complications from the disease, these medications are expensive and have side effects.\n" +
                 "Treatment is recommended as soon as the diagnosis is made.\n" +
                 "Without treatment, the average survival time after infection with HIV is estimated to be 9 to 11 years, depending on the HIV subtype.");
+
+        String labelListFile = new File("src/main/resources/labelsList.txt").getAbsolutePath();
         for (String line : testData) {
-            categorizer.checkUnlabeledData(line);
+            List<Pair<String, Double>> scores = categorizer.checkUnlabeledData(line, labelListFile);
+
+            log.info("Content falls into the following categories: ");
+            for (Pair<String, Double> score: scores) {
+                log.info("        " + score.getFirst() + ": " + score.getSecond());
+            }
         }
 
 

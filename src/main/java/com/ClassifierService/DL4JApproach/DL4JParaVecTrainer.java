@@ -5,6 +5,9 @@ import org.deeplearning4j.text.documentiterator.LabelAwareIterator;
 import org.deeplearning4j.text.tokenization.tokenizerfactory.TokenizerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.ClassifierService.DL4JApproach.tools.Dl4jUtils;
+
+import java.io.File;
 
 import static org.deeplearning4j.models.embeddings.loader.WordVectorSerializer.writeParagraphVectors;
 
@@ -38,6 +41,10 @@ public class DL4JParaVecTrainer {
         paragraphVectors.fit();
 
         writeParagraphVectors(paragraphVectors, modelFile);
+
+
+        String labelListFile = new File("src/main/resources/labelsList.txt").getAbsolutePath();
+        Dl4jUtils.writeListToFile(iterator.getLabelsSource().getLabels(), labelListFile);
         log.info("Model successfully saved on '" + modelFile + "' location");
     }
 }

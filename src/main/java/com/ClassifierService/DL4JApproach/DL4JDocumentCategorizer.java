@@ -1,5 +1,6 @@
 package com.ClassifierService.DL4JApproach;
 
+import com.ClassifierService.DL4JApproach.tools.Dl4jUtils;
 import com.ClassifierService.DL4JApproach.tools.MeansBuilder;
 import org.nd4j.linalg.primitives.Pair;
 import com.ClassifierService.DL4JApproach.tools.LabelSeeker;
@@ -7,7 +8,6 @@ import org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable;
 import org.deeplearning4j.models.paragraphvectors.ParagraphVectors;
 import org.deeplearning4j.models.word2vec.VocabWord;
 import org.deeplearning4j.text.documentiterator.FileLabelAwareIterator;
-import org.deeplearning4j.text.documentiterator.LabelAwareIterator;
 import org.deeplearning4j.text.documentiterator.LabelledDocument;
 import org.deeplearning4j.text.tokenization.tokenizerfactory.TokenizerFactory;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -20,18 +20,16 @@ import java.util.List;
 
 public class DL4JDocumentCategorizer {
     ParagraphVectors paragraphVectors;
-    LabelAwareIterator iterator;
     TokenizerFactory tokenizerFactory;
 
     final Logger log = LoggerFactory.getLogger(DL4JDocumentCategorizer.class);
 
-    public DL4JDocumentCategorizer(ParagraphVectors paragraphVectors,LabelAwareIterator iterator, TokenizerFactory tokenizerFactory){
+    public DL4JDocumentCategorizer(ParagraphVectors paragraphVectors, TokenizerFactory tokenizerFactory){
         this.paragraphVectors = paragraphVectors;
-        this.iterator = iterator;
         this.tokenizerFactory = tokenizerFactory;
     }
 
-    public void checkUnlabeledData(File unClassifiedResource) throws FileNotFoundException {
+    public void checkUnlabeledData(File unClassifiedResource,  String labelListFile) throws FileNotFoundException {
 
         FileLabelAwareIterator unClassifiedIterator = new FileLabelAwareIterator.Builder()
                 .addSourceFolder(unClassifiedResource)
@@ -40,7 +38,11 @@ public class DL4JDocumentCategorizer {
         MeansBuilder meansBuilder = new MeansBuilder(
                 (InMemoryLookupTable<VocabWord>)paragraphVectors.getLookupTable(),
                 tokenizerFactory);
-        LabelSeeker seeker = new LabelSeeker(iterator.getLabelsSource().getLabels(),
+
+        List<String> labelList = Dl4jUtils.loadListFromFile(labelListFile);
+        System.out.println(labelList);
+
+        LabelSeeker seeker = new LabelSeeker(labelList,
                 (InMemoryLookupTable<VocabWord>) paragraphVectors.getLookupTable());
 
         while (unClassifiedIterator.hasNextDocument()) {
@@ -55,21 +57,24 @@ public class DL4JDocumentCategorizer {
         }
     }
 
-    public void checkUnlabeledData(String content) throws FileNotFoundException {
+    public List<Pair<String, Double>> checkUnlabeledData(String content, String labelListFile) throws FileNotFoundException {
 
         MeansBuilder meansBuilder = new MeansBuilder(
                 (InMemoryLookupTable<VocabWord>)paragraphVectors.getLookupTable(),
                 tokenizerFactory);
-        LabelSeeker seeker = new LabelSeeker(iterator.getLabelsSource().getLabels(),
+
+
+        List<String> labelList = Dl4jUtils.loadListFromFile(labelListFile);
+        System.out.println(labelList);
+
+        LabelSeeker seeker = new LabelSeeker(labelList,
                 (InMemoryLookupTable<VocabWord>) paragraphVectors.getLookupTable());
 
             INDArray documentAsCentroid = meansBuilder.stringAsVector(content);
             List<Pair<String, Double>> scores = seeker.getScores(documentAsCentroid);
 
-            log.info("Content falls into the following categories: ");
-            for (Pair<String, Double> score: scores) {
-                log.info("        " + score.getFirst() + ": " + score.getSecond());
-            }
+            return scores;
 
     }
+
 }

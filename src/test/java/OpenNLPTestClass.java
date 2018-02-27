@@ -13,7 +13,7 @@ public class OpenNLPTestClass {
     private static Logger log = LoggerFactory.getLogger(OpenNLPTestClass.class);
     public static void main(String args[]) throws IOException {
 
-        String modelFile = new File("src/test/resources/models/open_nlp_model.bin").getAbsolutePath();
+        String modelFile = new File("src/main/resources/models/open_nlp_model.bin").getAbsolutePath();
 
         OpenNLPDocumentCategorizer detector = new OpenNLPDocumentCategorizer();
 
@@ -32,12 +32,12 @@ public class OpenNLPTestClass {
 //            System.out.println(detector.getCategory(line) + "\t" + line);
 //        }
 
-        String directory = new File("src/test/resources/paravec/labeled").getAbsolutePath();
+        String directory = new File("src/main/resources/paravec/labeled").getAbsolutePath();
         detector.trainModelfromDocuments( directory, modelFile);
 
         detector.initModel(modelFile);
 
-        String testDataDir = new File("src/test/resources/paravec/unlabeled").getAbsolutePath();
+        String testDataDir = new File("src/main/resources/paravec/unlabeled").getAbsolutePath();
         Collection<String> fileNames = FileUtil.getDirectories(testDataDir);
         HashMap<String, String> testDataMap = new HashMap<String, String>();
         for (String discipline : fileNames) {
