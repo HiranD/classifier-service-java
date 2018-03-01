@@ -17,6 +17,7 @@ public class OpenNLPTestClass {
 
         OpenNLPDocumentCategorizer detector = new OpenNLPDocumentCategorizer();
 
+////      try training and testing on twitter data to classify good and bad reviews..
 //        String inputFile = new File("src/test/resources/data/tweets.txt").getAbsolutePath();
 //        detector.trainModelfromMarkedFile(inputFile, modelFile);
 //        ArrayList<String> testData = new ArrayList<String>();

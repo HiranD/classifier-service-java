@@ -33,7 +33,8 @@ public class ClassifierService {
     private static DL4JDocumentCategorizer categorizer = null;
     private static String labelListFile = null;
 
-
+//  This is to reduce memory consumption and response time by loading only the relevant model at the first request.
+//  If request are for the other classifier this load that relevant model to the memory.
     private void RunOnFirstRequest(String classifier){
         ClassLoader classLoader = getClass().getClassLoader();
         if(!previous_classifier.equals(classifier) || previous_classifier.equals("")){
@@ -59,6 +60,7 @@ public class ClassifierService {
         }
     }
 
+//    url: post request => http://ip:port/service/health
     @POST
     @Path("/health")
     @Produces(MediaType.APPLICATION_JSON)
@@ -66,6 +68,8 @@ public class ClassifierService {
         return Response.status(200).entity("health is Ok..").build();
     }
 
+//    url: post request => http://ip:port/service/dl4jClassifier
+//    include text content in plain text in the request body
     @POST
     @Path("/dl4jClassifier")
     @Consumes(MediaType.TEXT_PLAIN)
@@ -86,6 +90,8 @@ public class ClassifierService {
         return Response.status(200).entity(json).build();
     }
 
+//    url: post request => http://ip:port/service/openNlpClassifier
+//    include text content in plain text in the request body
     @POST
     @Path("/openNlpClassifier")
     @Consumes(MediaType.TEXT_PLAIN)

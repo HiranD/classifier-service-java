@@ -29,6 +29,7 @@ public class DL4JDocumentCategorizer {
         this.tokenizerFactory = tokenizerFactory;
     }
 
+//    input => document as a file
     public void checkUnlabeledData(File unClassifiedResource,  String labelListFile) throws FileNotFoundException {
 
         FileLabelAwareIterator unClassifiedIterator = new FileLabelAwareIterator.Builder()
@@ -57,6 +58,7 @@ public class DL4JDocumentCategorizer {
         }
     }
 
+//    input => document as a string
     public List<Pair<String, Double>> checkUnlabeledData(String content, String labelListFile) throws FileNotFoundException {
 
         MeansBuilder meansBuilder = new MeansBuilder(

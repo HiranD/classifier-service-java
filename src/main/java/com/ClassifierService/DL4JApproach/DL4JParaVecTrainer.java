@@ -37,13 +37,15 @@ public class DL4JParaVecTrainer {
                 .build();
 
 
-        // Start model training
+//      start model training
         paragraphVectors.fit();
-
+//      saving the model
         writeParagraphVectors(paragraphVectors, modelFile);
 
 
         String labelListFile = new File("src/main/resources/labelsList.txt").getAbsolutePath();
+//      Saves topics labels to a file.. therefor we can classify new content only using this and model file.
+//      (no need to load training set when classifying new content.)
         Dl4jUtils.writeListToFile(iterator.getLabelsSource().getLabels(), labelListFile);
         log.info("Model successfully saved on '" + modelFile + "' location");
     }

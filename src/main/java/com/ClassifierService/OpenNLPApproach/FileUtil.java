@@ -4,34 +4,20 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.PrintWriter;
-import java.io.RandomAccessFile;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FileUtil {
 
 	private enum StringCase {
-		ALL, LOWERCASE, UPPCASE
+		ALL, LOWERCASE, UPPERCASE
 	}
 
 	public static BufferedReader loadFileForRead(String fileName) {
@@ -104,7 +90,7 @@ public class FileUtil {
 			while ((line = br.readLine()) != null) {
 				if (stringCase == StringCase.LOWERCASE) {
 					line = new String(line.toLowerCase());
-				} else if (stringCase == StringCase.UPPCASE) {
+				} else if (stringCase == StringCase.UPPERCASE) {
 					line = new String(line.toUpperCase());
 				}
 
@@ -129,13 +115,5 @@ public class FileUtil {
 			content.addAll(readFileAsList(DataDir + "/"+ file, StringCase.ALL));
 		}
 		return content;
-	}
-
-	public static List<String> readFileAsList(String fileName) {
-		return readFileAsList(fileName, StringCase.ALL);
-	}
-
-	public static Collection<String> readFileAsListLowerCase(String fileName) {
-		return readFileAsList(fileName, StringCase.LOWERCASE);
 	}
 }

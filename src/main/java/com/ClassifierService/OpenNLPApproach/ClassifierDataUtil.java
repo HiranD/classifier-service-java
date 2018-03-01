@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 public class ClassifierDataUtil {
 	private static final Logger log = LoggerFactory.getLogger(ClassifierDataUtil.class);
 
+//	read training data and create an inputstream
 	public static InputStream readClassifierSourceData(String trainingDataDir) throws IOException {
 		Collection<String> fileNames = FileUtil.getDirectories(trainingDataDir);
 		ByteArrayOutputStream trainingBaos = new ByteArrayOutputStream();

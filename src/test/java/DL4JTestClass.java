@@ -38,10 +38,11 @@ public class DL4JTestClass {
 
         DL4JDocumentCategorizer categorizer = new DL4JDocumentCategorizer(readParagraphVectors(modelFile), tokenizerFactory);
 
+////       to test accuracy load unlabeled docs...
 //        File unClassifiedResource = new File("src/test/resources/data/unlabeled");
 //        categorizer.checkUnlabeledData(unClassifiedResource);
 
-
+//      or use ur own strings...
         ArrayList<String> testData = new ArrayList<String>();
         testData.add("The Russian Trading System (RTS) was a stock market established in 1995 in Moscow, consolidating various regional trading floors into one exchange.\n" +
                 "Originally RTS was modeled on NASDAQ's trading and settlement software; in 1998 the exchange went on line with its own in-house system.\n" +

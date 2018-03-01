@@ -38,6 +38,7 @@ public class OpenNLPDocumentCategorizer {
         }
     }
 
+//    training input => files
     public void trainModelfromMarkedFile(String inputFile, String modelFile) throws IOException {
 
         MarkableFileInputStreamFactory factory = new MarkableFileInputStreamFactory(new File(inputFile));
@@ -45,6 +46,7 @@ public class OpenNLPDocumentCategorizer {
         this.trainModel(lineStream, modelFile);
     }
 
+//    training input => strings
     public void trainModelfromDocuments(String contentDir, String modelFile) throws IOException {
 
         InputStream trainingData = ClassifierDataUtil.readClassifierSourceData(contentDir);
@@ -69,6 +71,7 @@ public class OpenNLPDocumentCategorizer {
 
     }
 
+//    returns most probable category for a given string
     public String getCategory(String text) {
         SimpleTokenizer tokenizer = SimpleTokenizer.INSTANCE;
         String[] tokens = tokenizer.tokenize(text);
@@ -77,6 +80,7 @@ public class OpenNLPDocumentCategorizer {
         return category;
     }
 
+//    returns all categories with there weightages for a given string
     public HashMap<String,Double> getWeights(String text) {
         HashMap<String,Double> results = new HashMap<String,Double>();
         SimpleTokenizer tokenizer = SimpleTokenizer.INSTANCE;
