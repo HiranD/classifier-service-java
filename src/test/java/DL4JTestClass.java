@@ -20,15 +20,18 @@ import static org.deeplearning4j.models.embeddings.loader.WordVectorSerializer.r
 public class DL4JTestClass {
 
     private static Logger log = LoggerFactory.getLogger(DL4JTestClass.class);
+    static String modelFile = null;
+    static String dataDirectory = "src/test/resources/data/labeled";
+    static String testDataDir = "src/test/resources/data/unlabeled";
 
     public static void main(String[] args) {
     try {
         String log4jConfPath = new File("src/main/resources/log4j.properties").getAbsolutePath();
         PropertyConfigurator.configure(log4jConfPath);
 
-        String modelFile = new File("src/main/resources/models/dl4j_para_vec.pv").getAbsolutePath();
+        modelFile = new File("src/main/resources/models/dl4j_para_vec.pv").getAbsolutePath();
 
-        File resource = new File("src/test/resources/data/labeled");
+        File resource = new File(dataDirectory);
         LabelAwareIterator iterator = new FileLabelAwareIterator.Builder().addSourceFolder(resource).build();
         TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
         tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
@@ -39,7 +42,7 @@ public class DL4JTestClass {
         DL4JDocumentCategorizer categorizer = new DL4JDocumentCategorizer(readParagraphVectors(modelFile), tokenizerFactory);
 
 ////       to test accuracy load unlabeled docs...
-//        File unClassifiedResource = new File("src/test/resources/data/unlabeled");
+//        File unClassifiedResource = new File(testDataDir);
 //        categorizer.checkUnlabeledData(unClassifiedResource);
 
 //      or use ur own strings...
